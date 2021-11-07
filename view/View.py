@@ -30,7 +30,7 @@ class View(QWidget):
         self.__textBox_length = QLineEdit()
         self.__comboBox_type = QComboBox()
 
-        self.__comboBox_type.addItems(self.__controller.get_bone_types())
+        self.__comboBox_type.addItems(self.__controller.get_bones())
 
         self.__vBox_labels = QVBoxLayout(alignment=QtCore.Qt.AlignLeft)
         self.__vBox_inputs = QVBoxLayout(alignment=QtCore.Qt.AlignLeft)
