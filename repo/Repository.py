@@ -1,5 +1,6 @@
 from domain.BoneModel import BoneModel
 from domain.Response import Response
+from ml_alorithms.DecisionTree import DecisionTree
 
 
 class Repository:
@@ -8,10 +9,11 @@ class Repository:
         self.__bones = []
         self.__network = ann
         self.init_ui_data()
+        self.tree = None
 
     def init_ui_data(self):
-        bone1_map_model = {"ml": "", "hd": "", "eb": "", "mld": ""}
-        bone2_map_model = {"ml": "", "hd": "", "eb": "", "mld": ""}
+        bone1_map_model = {"HML": "", "HEB": "", "HHD": "", "HMLD": ""}
+        bone2_map_model = {"FML": "", "FHD": "", "eb": "", "FMLD": ""}
         bone1 = BoneModel("Humerus", bone1_map_model, "", "", "assets\humerus.png")
         bone2 = BoneModel("Femur", bone2_map_model, "", "", "assets\\femur.png")
         self.__bones.append(bone1)
@@ -21,4 +23,11 @@ class Repository:
         return self.__bones
 
     def get_bone_info(self, features, bone_type):
-        return Response("M", 100)
+        bone = BoneModel(bone_type, features, "", "", "")
+        self.tree = DecisionTree(bone)
+        self.tree.solve()
+        pred = self.tree.predict_one()
+        if pred == 0:
+            return Response("male", "")
+        else:
+            return Response("female", "")

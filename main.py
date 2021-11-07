@@ -1,11 +1,8 @@
-import sys
-
 from controller.Controller import Controller
-from domain.Payload import Payload
 from repo.Repository import Repository
 from service.Service import Service
 from view.View import View
-from PySide6 import QtCore, QtWidgets, QtGui
+from PySide6 import QtWidgets
 import sys
 
 if __name__ == '__main__':
@@ -16,5 +13,7 @@ if __name__ == '__main__':
     app = QtWidgets.QApplication([])
     view = View(controller)
     view.show()
+    # bone = BoneModel("humerus", {'HML': 286, 'HEB': 65, 'HHD': 42.45, 'HMLD': 21.82, 'SEX': 0, 'AGE': '40-50'},
+    #                       'male', '40-50', "")
 
     sys.exit(app.exec())

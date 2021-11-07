@@ -9,7 +9,7 @@ class BoneModel:
     def get_bone_type(self):
         return self.__bone_type
 
-    def get_feature(self):
+    def get_features(self):
         return self.__features
 
     def get_sex(self):

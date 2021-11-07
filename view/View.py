@@ -31,7 +31,7 @@ class View(QWidget):
         self.__comboBox_type.addItems(self.__controller.get_bone_types())
 
         self.__current_bone = self.__controller.get_bone_info_by_type(self.__comboBox_type.currentText())
-        self.__features = self.__current_bone.get_feature()
+        self.__features = self.__current_bone.get_features()
         self.__labels = {}
         self.__inputs = {}
         self.__generate_labels_and_inputs()
