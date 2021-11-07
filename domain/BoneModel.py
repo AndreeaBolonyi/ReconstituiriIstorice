@@ -16,3 +16,6 @@ class BoneModel:
 
     def get_age(self):
         return self.__age
+
+    def get_feature_value(self,feature):
+        return self.__features[feature]
