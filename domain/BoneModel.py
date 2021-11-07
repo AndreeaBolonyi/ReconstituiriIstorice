@@ -4,7 +4,7 @@ class BoneModel:
         self.__features = features
         self.__sex = sex
         self.__age = age
-        self.image = ""
+        self.image = image
 
     def get_bone_type(self):
         return self.__bone_type
