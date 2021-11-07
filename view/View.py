@@ -99,7 +99,6 @@ class View(QWidget):
         self.__features = self.__current_bone.get_feature()
         self.__generate_labels_and_inputs()
         self.__add_labels_and_inputs()
-        print(self.height() - 50)
         self.__set_image(self.__current_bone.image)
 
     def __set_image(self,image):
