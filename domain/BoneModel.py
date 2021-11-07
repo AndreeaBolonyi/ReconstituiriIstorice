@@ -1,9 +1,10 @@
 class BoneModel:
-    def __init__(self, bone_type, features, sex, age):
+    def __init__(self, bone_type, features, sex, age, image):
         self.__bone_type = bone_type
         self.__features = features
         self.__sex = sex
         self.__age = age
+        self.image = ""
 
     def get_bone_type(self):
         return self.__bone_type
@@ -17,5 +18,5 @@ class BoneModel:
     def get_age(self):
         return self.__age
 
-    def get_feature_value(self,feature):
+    def get_feature_value(self, feature):
         return self.__features[feature]
