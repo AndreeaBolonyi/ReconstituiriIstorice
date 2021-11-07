@@ -67,8 +67,6 @@ class View(QWidget):
         self.layout.setSpacing(20)
         self.layout.setContentsMargins(20, 20, 20, 20)
 
-
-
     def __generate_labels_and_inputs(self):
         self.__labels = {}
         self.__inputs = {}

@@ -11,7 +11,7 @@ class Repository:
 
     def init_ui_data(self):
         bone1_map_model = {"ml": "", "hd": "", "eb": ""}
-        bone2_map_model = {"ml2": "", "hd2": "", "eb2": "", "xx":""}
+        bone2_map_model = {"ml": "", "hd": "", "eb": ""}
         bone1 = BoneModel("Humerus", bone1_map_model, "", "", "assets\humerus.png")
         bone2 = BoneModel("Femur", bone2_map_model, "", "", "assets\\femur.png")
         self.__bones.append(bone1)
