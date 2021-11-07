@@ -1,10 +1,10 @@
 class Payload:
-    def __init__(self, bone_type, bone_length):
+    def __init__(self, bone_type, features):
         self.__boneType = bone_type
-        self.__boneLength = bone_length
+        self.__features = features
 
     def get_bone_type(self):
         return self.__boneType
 
     def get_bone_length(self):
-        return self.__boneLength
+        return self.__features
