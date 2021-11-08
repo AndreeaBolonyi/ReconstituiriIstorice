@@ -1,10 +1,6 @@
-import sys
-import random
-from PySide6 import QtCore, QtWidgets, QtGui
+from PySide6 import QtCore, QtWidgets
 from PySide6.QtGui import QPixmap
-from PySide6.QtWidgets import QMessageBox, QLabel, QPushButton, QComboBox, QLineEdit, QVBoxLayout, QHBoxLayout, QWidget
-
-from controller.Controller import Controller
+from PySide6.QtWidgets import QLabel, QPushButton, QComboBox, QLineEdit, QVBoxLayout, QHBoxLayout, QWidget
 from domain.Payload import Payload
 from view.MessageBox import MessageBox
 from view.ResponseWindow import ResponseWindow
@@ -96,7 +92,7 @@ class View(QWidget):
     def __on_selection_change_from_comboBox_type(self):
         self.__delete_labels_and_inputs()
         self.__current_bone = self.__controller.get_bone_info_by_type(self.__comboBox_type.currentText())
-        self.__features = self.__current_bone.get_feature()
+        self.__features = self.__current_bone.get_features()
         self.__generate_labels_and_inputs()
         self.__add_labels_and_inputs()
         self.__set_image(self.__current_bone.image)
