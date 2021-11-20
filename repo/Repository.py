@@ -25,9 +25,12 @@ class Repository:
     def get_bone_info(self, features, bone_type):
         bone = BoneModel(bone_type, features, "", "", "")
         self.tree = DecisionTree(bone)
-        self.tree.solve()
-        pred = self.tree.predict_one()
-        if pred == 0:
-            return Response("male", "")
-        else:
-            return Response("female", "")
+        self.tree.solve_sex()
+        sex, classes_name = self.tree.predict_one()
+        sex = list(classes_name)[sex]
+
+        self.tree.solve_age()
+        age, classes_name = self.tree.predict_one()
+        age = list(classes_name)[age]
+
+        return Response(sex, age)
