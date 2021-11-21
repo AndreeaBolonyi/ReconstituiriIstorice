@@ -1,10 +1,11 @@
 class BoneModel:
-    def __init__(self, bone_type, features, sex, age, image):
+    def __init__(self, bone_type, features, sex, age, image, infoFile):
         self.__bone_type = bone_type
         self.__features = features
         self.__sex = sex
         self.__age = age
         self.image = image
+        self.infoFile = infoFile
 
     def get_bone_type(self):
         return self.__bone_type
