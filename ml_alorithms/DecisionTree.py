@@ -93,8 +93,8 @@ class DecisionTree:
             # modify_age(self.__filename)
             self.__data_set = pd.read_csv(self.__filename, header=None, names=col_names)
         elif self.__bone.get_bone_type() == "Femur":
-            col_names = ['FML', 'FML', 'FHD', 'FMLD', 'SEX', 'AGE']
-            self.__feature_cols = ['FML', 'FML', 'FHD', 'FMLD']
+            col_names = ['FML', 'FHD', 'FEB', 'FMLD', 'SEX', 'AGE']
+            self.__feature_cols = ['FML', 'FHD', 'FEB', 'FMLD']
             self.__filename = "data/femur.csv"
             self.__data_set = pd.read_csv(self.__filename, header=None, names=col_names)
         else:
