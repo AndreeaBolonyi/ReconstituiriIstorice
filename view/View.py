@@ -8,6 +8,8 @@ from PySide6.QtWidgets import QLabel, QPushButton, QComboBox, QLineEdit, QVBoxLa
 from domain.Payload import Payload
 from domain.validators.FemurValidator import FemurValidator
 from domain.validators.HumerusValidator import HumerusValidator
+from domain.validators.ValidatorException import ValidatorException
+from utils.utils import get_list_of_values
 from view.MessageBox import MessageBox
 from view.ResponseWindow import ResponseWindow
 
@@ -156,13 +158,14 @@ class View(QWidget):
             try:
                 values[f] = float(val)
             except ValueError:
-                err += f + " trebuie sa fie numar!\n"
                 continue
-            if values[f] <= 0:
-                err += f + " trebuie sa fie mai mare decat 0!\n"
-        if err != "":
-            MessageBox("Eroare", err).show()
+        try:
+            print(get_list_of_values(values))
+            self.__validators[self.__comboBox_type.currentText()].validate(*get_list_of_values(values))
+        except Exception as exception:
+            MessageBox("Eroare", str(exception)).show()
             return
+
         bone_info = Payload(self.__comboBox_type.currentText(), values)
         self.__respWindow = ResponseWindow(self.__controller, bone_info, self.__controller.process_bone_info(bone_info))
         self.__respWindow.show()
