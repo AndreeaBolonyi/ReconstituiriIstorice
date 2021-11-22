@@ -31,21 +31,27 @@ class HumerusValidator(InputValidator):
 
     @staticmethod
     def validate_heb(hml, heb, hhd, hmld):
-        print(hml,heb,hhd,hmld)
-        if heb < hhd:
+        lower_values = [hmld, hhd]
+        if heb < max(lower_values):
             raise ValidatorException("Latimea epicondilara a humerusului nu poate fi mai mica decat diametrul capului "
                                      "humerusului")
-        greater_values = [hml, hmld]
+        greater_values = [hml]
         if heb > min(greater_values):
             raise ValidatorException("Latimea epicondilara a humerusului nu poate fi mai mare ca HML sau HMLD")
 
     @staticmethod
     def validate_hhd(hml, heb, hhd, hmld):
-        greater_values = [hml, heb, hmld]
+        greater_values = [hml, heb]
         if hhd > min(greater_values):
             raise ValidatorException("Diametrul capului humerusului nu poate fi mai mare decat oricare dintre "
                                      "ceilalti parametrii")
+        lower_values = [hmld]
+        if hhd < max(lower_values):
+            raise ValidatorException("Diametrul capului humerusului nu poate fi mai mic decat HMLD")
 
     @staticmethod
     def validate_hmld(hml, heb, hhd, hmld):
-        pass
+        greater_values = [hml,heb,hhd]
+        if hmld > min(greater_values):
+            raise ValidatorException("Diametrul medio-lateral diafizar al humerusului nu poate fi mai mare decat "
+                                     "oricare dintre parametrii")
