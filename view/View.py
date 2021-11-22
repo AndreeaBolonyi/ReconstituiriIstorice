@@ -83,7 +83,7 @@ class View(QWidget):
         self.__inputs = {}
         self.__info_buttons = {}
         for f in self.__features:
-            self.__labels[f] = QtWidgets.QLabel(f + " (cm) :")
+            self.__labels[f] = QtWidgets.QLabel(f + " (mm) :")
             self.__inputs[f] = QLineEdit()
             self.__info_buttons[f] = QPushButton("Info")
             self.__info_buttons[f].setFixedWidth(30)
@@ -150,17 +150,17 @@ class View(QWidget):
     def __buttonSendClicked(self):
         values = {}
         err = ""
-        print(self.__comboBox_type.currentText())
+        # print(self.__comboBox_type.currentText())
         for f in self.__features:
             val = self.__inputs[f].text()
-            print(f) # label
-            print(val) # value
+            # print(f) # label
+            # print(val) # value
             try:
                 values[f] = float(val)
             except ValueError:
                 continue
         try:
-            print(get_list_of_values(values))
+            # print(get_list_of_values(values))
             self.__validators[self.__comboBox_type.currentText()].validate(*get_list_of_values(values))
         except Exception as exception:
             MessageBox("Eroare", str(exception)).show()
