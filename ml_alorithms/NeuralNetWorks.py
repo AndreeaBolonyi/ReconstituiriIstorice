@@ -6,6 +6,9 @@ import tensorflow as tf
 from keras.layers import Conv2D, BatchNormalization, MaxPooling2D, Dropout, Flatten, Dense
 import os
 import numpy as np
+import matplotlib.pyplot as plt
+from tensorflow import keras
+
 
 def load_data(filename):
     data = []
@@ -40,13 +43,30 @@ def clasification_sex(data, output):
     model.add(Dense(20, activation='relu', input_dim=4))
     model.add(Dense(40, activation='relu'))
     model.add(Dense(2, activation='sigmoid'))
-    model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
+    model.compile(optimizer='Adam', loss='binary_crossentropy', metrics=['accuracy'])
     model.summary()
 
-    history = model.fit(train_data, train_output, validation_data=(valid_data, valid_output), epochs=1000, batch_size=100)
+    history = model.fit(train_data, train_output, validation_data=(valid_data, valid_output), epochs=200, batch_size=20)
+
 
     print(history.history)
     print(history.history.keys())
+    loss = history.history['loss']
+    val_loss = history.history['val_loss']
+    acc = history.history['accuracy']
+    val_acc = history.history['val_accuracy']
+    epochs = range(1, len(loss) + 1)
+    #plt.plot(epochs, loss, 'y', label='Loss')
+    plt.plot(epochs, acc, color='black', label='Accuracy')
+    #plt.plot(epochs, val_loss, 'y', color='black', label='Loss Validation')
+    plt.plot(epochs, val_acc, color='red', label='Accuracy Validation')
+    plt.xlabel('Epochs')
+    plt.ylabel('Loss')
+    plt.legend()
+    plt.show()
+
+    print(history.history['val_loss'])
+
 
 def run(type):
     if type == 'humerus':
@@ -58,4 +78,4 @@ def run(type):
 
 
 if __name__ == '__main__':
-    run('humerus')
+    run('femur')
