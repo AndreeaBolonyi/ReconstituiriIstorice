@@ -6,6 +6,10 @@ from PySide6 import QtCore, QtWidgets
 from PySide6.QtGui import QPixmap
 from PySide6.QtWidgets import QLabel, QPushButton, QComboBox, QLineEdit, QVBoxLayout, QHBoxLayout, QWidget
 from domain.Payload import Payload
+from domain.validators.FemurValidator import FemurValidator
+from domain.validators.HumerusValidator import HumerusValidator
+from domain.validators.ValidatorException import ValidatorException
+from utils.utils import get_list_of_values
 from view.MessageBox import MessageBox
 from view.ResponseWindow import ResponseWindow
 
@@ -14,6 +18,8 @@ class View(QWidget):
     def __init__(self, controller):
         self.__controller = controller
         self.__init_GUI()
+        self.__validators = {}
+        self.__init_validators()
 
     def __init_GUI(self):
         super().__init__()
@@ -144,18 +150,22 @@ class View(QWidget):
     def __buttonSendClicked(self):
         values = {}
         err = ""
+        print(self.__comboBox_type.currentText())
         for f in self.__features:
             val = self.__inputs[f].text()
+            print(f) # label
+            print(val) # value
             try:
                 values[f] = float(val)
             except ValueError:
-                err += f + " trebuie sa fie numar!\n"
                 continue
-            if values[f] <= 0:
-                err += f + " trebuie sa fie mai mare decat 0!\n"
-        if err != "":
-            MessageBox("Eroare", err).show()
+        try:
+            print(get_list_of_values(values))
+            self.__validators[self.__comboBox_type.currentText()].validate(*get_list_of_values(values))
+        except Exception as exception:
+            MessageBox("Eroare", str(exception)).show()
             return
+
         bone_info = Payload(self.__comboBox_type.currentText(), values)
         self.__respWindow = ResponseWindow(self.__controller, bone_info, self.__controller.process_bone_info(bone_info))
         self.__respWindow.show()
@@ -164,5 +174,13 @@ class View(QWidget):
     def __clear_inputs(self):
         for i in self.__inputs:
             self.__inputs[i].clear()
+
+    def __init_validators(self):
+        bone_types = self.__controller.get_bone_types()
+        for type in bone_types:
+            if type == "Humerus":
+                self.__validators["Humerus"] = HumerusValidator()
+            elif type == "Femur":
+                self.__validators["Femur"] = FemurValidator()
 
 
