@@ -25,7 +25,7 @@ class FemurValidator(InputValidator):
     @staticmethod
     def validate_fml(fml, feb, fhd, fmld):
         lower_values = [feb,fhd,fmld]
-        if fml < any(lower_values):
+        if fml < max(lower_values):
             raise ValidatorException("Lungimea maxima a femurului nu poate fi mai mica decat oricare dintre ceilalti "
                                      "parametrii")
 
@@ -34,26 +34,26 @@ class FemurValidator(InputValidator):
         lower_values = [fhd,fmld]
         greater_values = [fml]
 
-        if feb < any(lower_values):
+        if feb < max(lower_values):
             raise ValidatorException("Latimea medio-laterala epicondilara a femurului nu poate fi mai mica decat FHD "
                                      "sau FMLD")
 
-        if feb > any(greater_values):
+        if feb > min(greater_values):
             raise ValidatorException("Latimea medio-laterala epicondilara a femurului nu poate fi mai mare decat FML")
 
     @staticmethod
     def validate_fhd(fml, feb, fhd, fmld):
         greater_values = [feb,fml]
         lower_values = [fmld]
-        if fhd > any(greater_values):
+        if fhd > min(greater_values):
             raise ValidatorException("Diametrul capului femurului nu poate fi mai mare decat FEB sau FML")
-        if fhd < any(lower_values):
+        if fhd < max(lower_values):
             raise ValidatorException("Diametrul capului femurului trebuie sa fie mai mare decat FMLD")
 
     @staticmethod
     def validate_fmld(fml, feb, fhd, fmld):
         greater_values = [fml,fhd,feb]
 
-        if fmld > any(greater_values):
+        if fmld > min(greater_values):
             raise ValidatorException("Diametrul medio-lateral diafizar al femurului nu poate fi mai mare decat "
                                      "oricare dintre valorile parametriilor")
