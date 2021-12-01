@@ -10,6 +10,10 @@ from sklearn.model_selection import train_test_split
 
 
 def convert_age(age):
+    ages = ['40-50', '50+', '-20', '30-40', '20-30']
+    if age in ages:
+        return age
+
     if age.__contains__('+'):
         aux = age.split('+')
         if aux[0].__contains__("-"):
@@ -17,7 +21,7 @@ def convert_age(age):
         else:
             aux[0] = int(aux[0])
             if aux[0] <= 20:
-                return '<20'
+                return '-20'
             elif 20 <= aux[0] <= 30:
                 return '20-30'
             elif 30 <= aux[0] <= 40:
@@ -33,7 +37,7 @@ def convert_age(age):
         max_age = int(ages[1])
 
         if min_age <= 20:
-            return '<20'
+            return '-20'
         elif 20 <= min_age and 30 >= max_age:
             return '20-30'
         elif 30 <= min_age and 40 >= max_age:
@@ -45,7 +49,7 @@ def convert_age(age):
 
     age = int(age)
     if age <= 20:
-        return '<20'
+        return '-20'
     elif 20 <= age <= 30:
         return '20-30'
     elif 30 <= age <= 40:
@@ -71,6 +75,13 @@ def modify_age(filename):
     shutil.move(tempfile.name, filename)
 
 
+def distribute_equally_by_column(filename, column_names, column_name):
+    data_frame = pd.read_csv(filename, header=None, names=column_names)
+    min_value = data_frame[column_name].value_counts().min()
+    data_frame = data_frame.groupby(column_name).head(min_value)
+    return data_frame
+
+
 class DecisionTree:
     def __init__(self, bone):
         self.__bone = bone
@@ -86,17 +97,24 @@ class DecisionTree:
 
     def import_data(self):
         if self.__bone.get_bone_type() == "Humerus":
-            col_names = ['HML', 'HEB', 'HHD', 'HMLD', 'SEX', 'AGE']
+            column_names = ['HML', 'HEB', 'HHD', 'HMLD', 'SEX', 'AGE']
             self.__feature_cols = ['HML', 'HEB', 'HHD', 'HMLD']
             self.__filename = "data/humerus.csv"
 
             # modify_age(self.__filename)
-            self.__data_set = pd.read_csv(self.__filename, header=None, names=col_names)
+            self.__data_set = pd.read_csv(self.__filename, header=None, names=column_names)
+            # self.__data_set = distribute_equally_by_column(self.__filename, column_names, 'AGE')
+            # pandas.DataFrame(self.__data_set).to_csv('data/humerus.csv', header=False, index=False)
         elif self.__bone.get_bone_type() == "Femur":
-            col_names = ['FML', 'FHD', 'FEB', 'FMLD', 'SEX', 'AGE']
+            column_names = ['FML', 'FHD', 'FEB', 'FMLD', 'SEX', 'AGE']
             self.__feature_cols = ['FML', 'FHD', 'FEB', 'FMLD']
             self.__filename = "data/femur.csv"
-            self.__data_set = pd.read_csv(self.__filename, header=None, names=col_names)
+
+            # modify_age(self.__filename)
+            self.__data_set = pd.read_csv(self.__filename, header=None, names=column_names)
+            # self.__data_set = distribute_equally_by_column(self.__filename, column_names, 'SEX')
+            # self.__data_set = distribute_equally_by_column(self.__filename, column_names, 'AGE')
+            # pd.DataFrame(self.__data_set).to_csv('data/femur.csv', header=False, index=False)
         else:
             raise Exception("type not found")
 
@@ -156,8 +174,9 @@ class DecisionTree:
         self.create_decision_tree("age classification")
 
         self.plot_data_age()
+        filename = "data/decision_trees/tree_age_" + self.__filename.split(".")[0].split("/")[1] + ".dot"
         export_graphviz(self.__tree,
-                        out_file="tree_age.dot",
+                        out_file=filename,
                         feature_names=self.__feature_cols,
                         class_names=list(self.__classes_name),
                         filled=True)
@@ -170,8 +189,9 @@ class DecisionTree:
         self.create_decision_tree("sex classification")
 
         self.plot_data_sex()
+        filename = "data/decision_trees/tree_sex_" + self.__filename.split(".")[0].split("/")[1] + ".dot"
         export_graphviz(self.__tree,
-                        out_file="tree_sex.dot",
+                        out_file=filename,
                         feature_names=self.__feature_cols,
                         class_names=['male', 'female'],
                         filled=True)
@@ -207,7 +227,7 @@ class DecisionTree:
         with open(self.__filename, 'r') as csvfile:
             lines = csv.reader(csvfile, delimiter=',')
             for row in lines:
-                if row[5] == '<20':
+                if row[5] == '-20':
                     height[0] += 1
                 elif row[5] == '20-30':
                     height[1] += 1
