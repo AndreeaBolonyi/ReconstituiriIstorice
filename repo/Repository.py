@@ -1,6 +1,10 @@
+import csv
+
 from domain.BoneModel import BoneModel
 from domain.Response import Response
 from ml_alorithms.DecisionTree import DecisionTree
+
+from csv import reader
 
 
 class Repository:
@@ -35,19 +39,31 @@ class Repository:
 
         return Response(sex, age)
 
-    def save_bone(self, bonePaylaod):
+    def save_bone(self, bonePayload):
+        if self.bone_exists(bonePayload):
+            return
         sex = 0
-        features = bonePaylaod.get_bone_features()
+        features = bonePayload.get_bone_features()
         if features["SEX"] == "female":
             sex = 1
-        #TODO: De verificat daca osul exista in baza de date
-        if bonePaylaod.get_bone_type() == "Humerus":
-            with open('data/humerus.csv', 'a') as fd:
-                fd.write(str(float(features["HML"])) + "," + str(float(features["HEB"])) + "," + str(
-                    float(features["HHD"])) +
-                         "," + str(float(features["HMLD"])) + "," + str(sex) + "," + str(features["AGE"]))
-        if bonePaylaod.get_bone_type() == "Femur":
-            with open('data/femur.csv', 'a') as fd:
-                fd.write(str(float(features["FML"])) + "," + str(float(features["FHD"])) + "," + str(
-                    float(features["FEB"])) +
-                         "," + str(float(features["FMLD"])) + "," + str(sex) + "," + str(features["AGE"]))
+        keys = list(features.keys())
+        with open('data/'+bonePayload.get_bone_type().lower()+'.csv', 'a') as fd:
+            line = ""
+            for i in range(len(keys) - 2):
+                line += str(float(features[keys[i]])) + ","
+            line += str(sex) + "," + str(features["AGE"]) + "\n"
+            fd.write(line)
+
+    def bone_exists(self,bonePayload):
+        features = bonePayload.get_bone_features()
+        keys = list(features.keys())
+        with open('data/'+bonePayload.get_bone_type().lower()+'.csv', 'r') as read_obj:
+            csv_reader = reader(read_obj)
+            for row in csv_reader:
+                exista = True
+                for i in range(len(keys)-2):
+                    if row[i] != str(float(features[keys[i]])):
+                        exista = False
+                if exista:
+                    return True
+        return False
