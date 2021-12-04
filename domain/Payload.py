@@ -6,5 +6,5 @@ class Payload:
     def get_bone_type(self):
         return self.__boneType
 
-    def get_bone_length(self):
+    def get_bone_features(self):
         return self.__features

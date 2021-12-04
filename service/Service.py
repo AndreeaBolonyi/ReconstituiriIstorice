@@ -20,3 +20,6 @@ class Service:
         for bone in bones:
             if bone.get_bone_type() == bone_type:
                 return bone
+
+    def save_bone(self,bonePayload):
+        self.__repository.save_bone(bonePayload)

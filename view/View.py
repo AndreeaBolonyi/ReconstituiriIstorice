@@ -4,7 +4,7 @@ from functools import partial
 
 from PySide6 import QtCore, QtWidgets
 from PySide6.QtGui import QPixmap
-from PySide6.QtWidgets import QLabel, QPushButton, QComboBox, QLineEdit, QVBoxLayout, QHBoxLayout, QWidget
+from PySide6.QtWidgets import QLabel, QPushButton, QComboBox, QLineEdit, QVBoxLayout, QHBoxLayout, QWidget, QCheckBox
 from domain.Payload import Payload
 from domain.validators.FemurValidator import FemurValidator
 from domain.validators.HumerusValidator import HumerusValidator
@@ -66,10 +66,14 @@ class View(QWidget):
         self.__hBox_inputs.setSpacing(10)
 
         self.__left_layout = QVBoxLayout()
-        self.__left_layout.setSpacing(40)
+        self.__left_layout.setSpacing(30)
+
+        self.__checkBox_salvare_date = QCheckBox("Adaugare informatii in baza de date a\naplicatiei pentru imbunatatirea\nperformantei")
+        self.__checkBox_salvare_date.setChecked(True)
 
         self.__left_layout.addWidget(self.__label_introdu)
         self.__left_layout.addLayout(self.__hBox_inputs)
+        self.__left_layout.addWidget(self.__checkBox_salvare_date)
         self.__left_layout.addWidget(self.__button_send)
 
         self.layout = QHBoxLayout(self)
@@ -100,7 +104,7 @@ class View(QWidget):
             hBox.addWidget(self.__info_buttons[i])
             hBox.setSpacing(10)
             self.__vBox_inputs.addLayout(hBox)
-        self.setFixedHeight(180+40*len(self.__labels))
+        self.setFixedHeight(250+40*len(self.__labels))
 
     def __delete_labels_and_inputs(self):
         for f in self.__labels:
@@ -150,26 +154,36 @@ class View(QWidget):
     def __buttonSendClicked(self):
         values = {}
         err = ""
-        # print(self.__comboBox_type.currentText())
         for f in self.__features:
             val = self.__inputs[f].text()
-            # print(f) # label
-            # print(val) # value
             try:
                 values[f] = float(val)
             except ValueError:
+                err += f + " trebuie sa fie numar!\n"
                 continue
+            if values[f] <= 0:
+                err += f + " trebuie sa fie mai mare decat 0!\n"
+        if err != "":
+            MessageBox("Eroare", err).show()
+            return
         try:
-            # print(get_list_of_values(values))
             self.__validators[self.__comboBox_type.currentText()].validate(*get_list_of_values(values))
         except Exception as exception:
             MessageBox("Eroare", str(exception)).show()
             return
 
         bone_info = Payload(self.__comboBox_type.currentText(), values)
-        self.__respWindow = ResponseWindow(self.__controller, bone_info, self.__controller.process_bone_info(bone_info))
+        response = self.__controller.process_bone_info(bone_info)
+        self.__respWindow = ResponseWindow(self.__controller, bone_info, response)
         self.__respWindow.show()
         self.__clear_inputs()
+
+        if self.__checkBox_salvare_date.isChecked():
+            values["SEX"] = response.get_sex()
+            values["AGE"] = response.get_age()
+            response_bone = Payload(self.__comboBox_type.currentText(), values)
+            self.__controller.save_bone(response_bone)
+
 
     def __clear_inputs(self):
         for i in self.__inputs:

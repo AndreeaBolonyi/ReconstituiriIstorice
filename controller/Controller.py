@@ -3,7 +3,7 @@ class Controller:
         self.__service = service
 
     def process_bone_info(self, bone_info):
-        return self.__service.get_bone_info(bone_info.get_bone_length(),bone_info.get_bone_type())
+        return self.__service.get_bone_info(bone_info.get_bone_features(), bone_info.get_bone_type())
 
     def get_bone_types(self):
         return self.__service.get_bone_types()
@@ -13,3 +13,6 @@ class Controller:
 
     def run3DRendering(self, bone_info):
         pass
+
+    def save_bone(self,bonePayload):
+        self.__service.save_bone(bonePayload)

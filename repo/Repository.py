@@ -34,3 +34,20 @@ class Repository:
         age = list(classes_name)[age]
 
         return Response(sex, age)
+
+    def save_bone(self, bonePaylaod):
+        sex = 0
+        features = bonePaylaod.get_bone_features()
+        if features["SEX"] == "female":
+            sex = 1
+        #TODO: De verificat daca osul exista in baza de date
+        if bonePaylaod.get_bone_type() == "Humerus":
+            with open('data/humerus.csv', 'a') as fd:
+                fd.write(str(float(features["HML"])) + "," + str(float(features["HEB"])) + "," + str(
+                    float(features["HHD"])) +
+                         "," + str(float(features["HMLD"])) + "," + str(sex) + "," + str(features["AGE"]))
+        if bonePaylaod.get_bone_type() == "Femur":
+            with open('data/femur.csv', 'a') as fd:
+                fd.write(str(float(features["FML"])) + "," + str(float(features["FHD"])) + "," + str(
+                    float(features["FEB"])) +
+                         "," + str(float(features["FMLD"])) + "," + str(sex) + "," + str(features["AGE"]))
