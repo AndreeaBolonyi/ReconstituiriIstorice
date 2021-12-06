@@ -6,7 +6,8 @@ from keras.layers import Dense
 import os
 import numpy as np
 import matplotlib.pyplot as plt
-
+from tensorflow import keras
+from tensorflow.keras import layers
 
 def load_data(filename):
     data = []
@@ -28,6 +29,17 @@ def load_data(filename):
 
     return data, output
 
+def min_max(list,type):
+
+    min = 1
+    max = 0
+    for i in list:
+        if i < min:
+            min = i
+        if i> max:
+            max = i
+
+    print(type + "=> min: " + str(min) + " max: "+ str(max))
 
 def clasification_sex(data, output):
     k = int(0.8 * len(data))
@@ -38,14 +50,33 @@ def clasification_sex(data, output):
     valid_data = np.asarray(data[k:])
     valid_output = np.asarray(output[k:])
 
-    model = Sequential()
-    model.add(Dense(20, activation='relu', input_dim=4))
+    # model = Sequential()
+    # model.add(Dense(20, activation='relu', input_dim=4))
+    # model.add(Dense(40, activation='relu'))
+    # model.add(Dense(2, activation='sigmoid'))
+    # opt = keras.optimizers.Adam(learning_rate=0.0001)
+    # model.compile(optimizer=opt, loss='binary_crossentropy', metrics=['accuracy'])
+    # model.summary()
+
+    model = keras.Sequential()
+    model.add(layers.Dense(20, activation='relu', input_shape=(4,)))
     model.add(Dense(40, activation='relu'))
     model.add(Dense(2, activation='sigmoid'))
-    model.compile(optimizer='Adam', loss='binary_crossentropy', metrics=['accuracy'])
-    model.summary()
 
-    history = model.fit(train_data, train_output, validation_data=(valid_data, valid_output), epochs=200, batch_size=20)
+    # lr_schedule = keras.optimizers.schedules.ExponentialDecay(
+    #     initial_learning_rate=0.01,
+    #     decay_steps=70,
+    #     decay_rate=0.96)
+
+    lr_schedule = keras.optimizers.schedules.ExponentialDecay(
+        initial_learning_rate=0.01,
+        decay_steps=55,
+        decay_rate=0.98)
+
+    opt = keras.optimizers.Adam(learning_rate=lr_schedule)
+    model.compile(loss='binary_crossentropy', optimizer=opt,metrics=['accuracy'])
+
+    history = model.fit(train_data, train_output, validation_data=(valid_data, valid_output), epochs=800, batch_size=20)
 
     print(history.history)
     print(history.history.keys())
@@ -54,14 +85,18 @@ def clasification_sex(data, output):
     acc = history.history['accuracy']
     val_acc = history.history['val_accuracy']
     epochs = range(1, len(loss) + 1)
-    plt.plot(epochs, loss, 'y', label='Loss')
-    plt.plot(epochs, acc, color='black', label='Accuracy')
-    plt.plot(epochs, val_loss, 'y', color='black', label='Loss Validation')
+    plt.title('Humerus')
+    #plt.plot(epochs, loss, 'y', label='Loss')
     plt.plot(epochs, val_acc, color='red', label='Accuracy Validation')
+    plt.plot(epochs, acc, color='black', label='Accuracy Test')
+    #plt.plot(epochs, val_loss, 'y', color='black', label='Loss Validation')
     plt.xlabel('Epochs')
     plt.ylabel('Loss')
     plt.legend()
     plt.show()
+
+    min_max(acc,"Acuratete test")
+    min_max(val_acc,"Acuratete Validation")
 
     print(history.history['val_loss'])
 
