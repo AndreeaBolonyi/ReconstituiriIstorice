@@ -1,10 +1,11 @@
 import csv
 
+import numpy as np
 import pandas as pd
 from tempfile import NamedTemporaryFile
 import shutil
 from matplotlib import pyplot as plt
-from sklearn.metrics import accuracy_score
+from sklearn.metrics import accuracy_score, confusion_matrix, ConfusionMatrixDisplay
 from sklearn.tree import DecisionTreeClassifier, export_graphviz, export_text
 from sklearn.model_selection import train_test_split
 
@@ -158,7 +159,10 @@ class DecisionTree:
         return pred[0], self.__classes_name
 
     def accuracy(self, y_pred):
-        # print("Confusion Matrix: ", confusion_matrix(self.__y_test, y_pred))
+        # print("Confusion matrix: " + confusion_matrix(self.__y_test, y_pred))
+        display = ConfusionMatrixDisplay.from_predictions(self.__y_test, y_pred)
+        display.plot()
+        plt.show()
         print("Accuracy : ", accuracy_score(self.__y_test, y_pred) * 100)
 
     def create_decision_tree(self, classification_type):
