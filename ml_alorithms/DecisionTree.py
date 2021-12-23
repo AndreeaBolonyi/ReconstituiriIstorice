@@ -98,32 +98,38 @@ class DecisionTree:
 
     def import_data(self):
         if self.__bone.get_bone_type() == "Humerus":
-            column_names = ['HML', 'HEB', 'HHD', 'HMLD', 'SEX', 'AGE']
-            self.__feature_cols = ['HML', 'HEB', 'HHD', 'HMLD']
-            self.__filename = "data/humerus.csv"
-
-            # modify_age(self.__filename)
-            self.__data_set = pd.read_csv(self.__filename, header=None, names=column_names)
-            # self.__data_set = distribute_equally_by_column(self.__filename, column_names, 'AGE')
-            # pandas.DataFrame(self.__data_set).to_csv('data/humerus.csv', header=False, index=False)
+            self.import_humerus()
         elif self.__bone.get_bone_type() == "Femur":
-            column_names = ['FML', 'FHD', 'FEB', 'FMLD', 'SEX', 'AGE']
-            self.__feature_cols = ['FML', 'FHD', 'FEB', 'FMLD']
-            self.__filename = "data/femur.csv"
-
-            # modify_age(self.__filename)
-            self.__data_set = pd.read_csv(self.__filename, header=None, names=column_names)
-            # self.__data_set = distribute_equally_by_column(self.__filename, column_names, 'SEX')
-            # self.__data_set = distribute_equally_by_column(self.__filename, column_names, 'AGE')
-            # pd.DataFrame(self.__data_set).to_csv('data/femur.csv', header=False, index=False)
+            self.import_femur()
         else:
             raise Exception("type not found")
 
-    def split_data_for_sex(self):
+    def import_humerus(self):
+        column_names = ['HML', 'HEB', 'HHD', 'HMLD', 'SEX', 'AGE']
+        self.__feature_cols = ['HML', 'HEB', 'HHD', 'HMLD']
+        self.__filename = "data/humerus.csv"
+
+        # modify_age(self.__filename)
+        self.__data_set = pd.read_csv(self.__filename, header=None, names=column_names)
+        # self.__data_set = distribute_equally_by_column(self.__filename, column_names, 'AGE')
+        # pandas.DataFrame(self.__data_set).to_csv('data/humerus.csv', header=False, index=False)
+
+    def import_femur(self):
+        column_names = ['FML', 'FHD', 'FEB', 'FMLD', 'SEX', 'AGE']
+        self.__feature_cols = ['FML', 'FHD', 'FEB', 'FMLD']
+        self.__filename = "data/femur.csv"
+
+        # modify_age(self.__filename)
+        self.__data_set = pd.read_csv(self.__filename, header=None, names=column_names)
+        # self.__data_set = distribute_equally_by_column(self.__filename, column_names, 'SEX')
+        # self.__data_set = distribute_equally_by_column(self.__filename, column_names, 'AGE')
+        # pd.DataFrame(self.__data_set).to_csv('data/femur.csv', header=False, index=False)
+
+    def split_data_for_sex(self, size_for_test):
         x = self.__data_set[self.__feature_cols]
         y = self.__data_set.SEX
         self.__classes_name = ['male', 'female']
-        self.__x_train, self.__x_test, self.__y_train, self.__y_test = train_test_split(x, y, test_size=0.2,
+        self.__x_train, self.__x_test, self.__y_train, self.__y_test = train_test_split(x, y, test_size=size_for_test,
                                                                                         random_state=1)
 
     def convert_age_to_number(self, age):
@@ -134,11 +140,11 @@ class DecisionTree:
             else:
                 index += 1
 
-    def split_data_for_age(self):
+    def split_data_for_age(self, size_for_test):
         x = self.__data_set[self.__feature_cols]
         self.__classes_name = {*self.__data_set.AGE.tolist()}
         y = [self.convert_age_to_number(x) for x in self.__data_set.AGE]
-        self.__x_train, self.__x_test, self.__y_train, self.__y_test = train_test_split(x, y, test_size=0.2,
+        self.__x_train, self.__x_test, self.__y_train, self.__y_test = train_test_split(x, y, test_size=size_for_test,
                                                                                         random_state=1)
 
     def train_using_gini(self):
@@ -174,7 +180,7 @@ class DecisionTree:
 
     def solve_age(self):
         self.import_data()
-        self.split_data_for_age()
+        self.split_data_for_age(0.2)
         self.create_decision_tree("age classification")
 
         self.plot_data_age()
@@ -189,7 +195,7 @@ class DecisionTree:
 
     def solve_sex(self):
         self.import_data()
-        self.split_data_for_sex()
+        self.split_data_for_sex(0.2)
         self.create_decision_tree("sex classification")
 
         self.plot_data_sex()
@@ -201,6 +207,79 @@ class DecisionTree:
                         filled=True)
 
         export_text(self.__tree, feature_names=self.__feature_cols)
+
+    def statistical_analysis(self):
+        # rulam algoritmul pe 5 seturi de date pentru a determina acuratetea in diferite cazuri
+        # ulterior, aceste date se vor compara cu datele obtinute in urma analizei retelei neuronale
+        # prin comparare se va stabili care algoritm este mai performant pentru sex, respectiv varsta
+
+        # analiza humerus
+        acc_humerus_sex = [self.get_acc_sex_humerus(0.2), self.get_acc_sex_humerus(0.4), self.get_acc_sex_humerus(0.8),
+                           self.get_acc_sex_humerus(0.35), self.get_acc_sex_humerus(0.7)]
+        self.print_results(acc_humerus_sex, "humerus", "sex")
+
+        acc_humerus_age = [self.get_acc_age_humerus(0.2), self.get_acc_age_humerus(0.4), self.get_acc_age_humerus(0.8),
+                           self.get_acc_age_humerus(0.35), self.get_acc_age_humerus(0.7)]
+        self.print_results(acc_humerus_age, "humerus", "varsta")
+
+        # analiza femur
+        acc_femur_sex = [self.get_acc_sex_femur(0.2), self.get_acc_sex_femur(0.4), self.get_acc_sex_femur(0.8),
+                         self.get_acc_sex_femur(0.35), self.get_acc_sex_femur(0.7)]
+        self.print_results(acc_femur_sex, "femur", "sex")
+
+        acc_femur_age = [self.get_acc_age_femur(0.2), self.get_acc_age_femur(0.4), self.get_acc_age_femur(0.8),
+                           self.get_acc_age_femur(0.35), self.get_acc_age_femur(0.7)]
+        self.print_results(acc_femur_age, "femur", "varsta")
+
+        # plot acurateti in raport cu dimensiunea datelor de test
+        test_sizes = [0.2, 0.4, 0.8, 0.35, 0.7]
+        plt.scatter(test_sizes, acc_humerus_sex)
+        plt.scatter(test_sizes, acc_femur_sex)
+        plt.title("Determinare sex")
+        plt.xlabel("% date de test")
+        plt.ylabel("acuratete")
+        plt.show()
+
+        plt.scatter(test_sizes, acc_humerus_age)
+        plt.scatter(test_sizes, acc_femur_age)
+        plt.title("Determinare varsta")
+        plt.xlabel("% date de test")
+        plt.ylabel("acuratete")
+        plt.show()
+
+
+    def get_acc_sex_humerus(self, test_size):
+        self.import_humerus()
+        self.split_data_for_sex(test_size)
+        self.train_using_gini()
+        y_pred = self.predict()
+        return accuracy_score(self.__y_test, y_pred) * 100
+
+    def get_acc_age_humerus(self, test_size):
+        self.import_humerus()
+        self.split_data_for_age(test_size)
+        self.train_using_gini()
+        y_pred = self.predict()
+        return accuracy_score(self.__y_test, y_pred) * 100
+
+    def get_acc_sex_femur(self, test_size):
+        self.import_femur()
+        self.split_data_for_sex(test_size)
+        self.train_using_gini()
+        y_pred = self.predict()
+        return accuracy_score(self.__y_test, y_pred) * 100
+
+    def get_acc_age_femur(self, test_size):
+        self.import_femur()
+        self.split_data_for_age(test_size)
+        self.train_using_gini()
+        y_pred = self.predict()
+        return accuracy_score(self.__y_test, y_pred) * 100
+
+    def print_results(self, acc_list, bone_type, classification_type):
+        print("\n" + "Rezultate arbore de decizie - determinarea " + classification_type + " pentru " + bone_type)
+        print("Media acuratetilor este: " + (sum(acc_list) / len(acc_list)).__str__())
+        print("Interval de incredere: [" + min(acc_list).__str__() + ", " + max(acc_list).__str__() + "]")
 
     def plot_data_sex(self):
         names = self.__classes_name
