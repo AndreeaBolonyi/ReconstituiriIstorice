@@ -45,7 +45,7 @@ class Repository:
         if features["SEX"] == "female":
             sex = 1
         keys = list(features.keys())
-        with open('app/data/'+bonePayload.get_bone_type().lower()+'.csv', 'a') as fd:
+        with open('app/ai/data/'+bonePayload.get_bone_type().lower()+'.csv', 'a') as fd:
             line = ""
             for i in range(len(keys) - 2):
                 line += str(float(features[keys[i]])) + ","
@@ -55,7 +55,7 @@ class Repository:
     def bone_exists(self,bonePayload):
         features = bonePayload.get_bone_features()
         keys = list(features.keys())
-        with open('app/data/'+bonePayload.get_bone_type().lower()+'.csv', 'r') as read_obj:
+        with open('app/ai/data/'+bonePayload.get_bone_type().lower()+'.csv', 'r') as read_obj:
             csv_reader = reader(read_obj)
             for row in csv_reader:
                 exista = True

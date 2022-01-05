@@ -9,8 +9,8 @@ class FemurValidator(InputValidator):
     def validate(self,*args):
         try:
             fml = float(args[0])
-            feb = float(args[1])
-            fhd = float(args[2])
+            fhd = float(args[1])
+            feb = float(args[2])
             fmld = float(args[3])
         except ValueError:
             raise ValidatorException("Parametrii contin una sau mai multe valori care nu sunt de tip rational!")

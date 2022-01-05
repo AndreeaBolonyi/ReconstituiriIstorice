@@ -58,4 +58,5 @@ class ResponseWindow(QWidget):
         self.close()
 
     def __buttonView3dClicked(self):
+        print(self.__bone_info)
         self.__controller.run3DRendering(self.__bone_info)
