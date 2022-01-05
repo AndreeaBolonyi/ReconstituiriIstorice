@@ -1,17 +1,15 @@
 import csv
-from copy import copy
 from functools import partial
 
 from PySide6 import QtCore, QtWidgets
 from PySide6.QtGui import QPixmap
 from PySide6.QtWidgets import QLabel, QPushButton, QComboBox, QLineEdit, QVBoxLayout, QHBoxLayout, QWidget, QCheckBox
-from domain.Payload import Payload
-from domain.validators.FemurValidator import FemurValidator
-from domain.validators.HumerusValidator import HumerusValidator
-from domain.validators.ValidatorException import ValidatorException
-from utils.utils import get_list_of_values
-from view.MessageBox import MessageBox
-from view.ResponseWindow import ResponseWindow
+from app.src.domain.Payload import Payload
+from app.src.domain.validators.FemurValidator import FemurValidator
+from app.src.domain.validators.HumerusValidator import HumerusValidator
+from app.src.utils.utils import get_list_of_values
+from app.src.view.MessageBox import MessageBox
+from app.src.view.ResponseWindow import ResponseWindow
 
 
 class View(QWidget):

@@ -1,8 +1,6 @@
-import csv
-
-from domain.BoneModel import BoneModel
-from domain.Response import Response
-from ml_alorithms.DecisionTree import DecisionTree
+from app.src.domain.BoneModel import BoneModel
+from app.src.domain.Response import Response
+from app.ai.ml_algorithms.DecisionTree import DecisionTree
 
 from csv import reader
 
@@ -18,8 +16,8 @@ class Repository:
     def init_ui_data(self):
         bone1_map_model = {"HML": "", "HEB": "", "HHD": "", "HMLD": ""}
         bone2_map_model = {"FML": "", "FHD": "", "FEB": "", "FMLD": ""}
-        bone1 = BoneModel("Humerus", bone1_map_model, "", "", "assets\\humerus.png", "info\\humerus_info.csv")
-        bone2 = BoneModel("Femur", bone2_map_model, "", "", "assets\\femur.png", "info\\femur_info.csv")
+        bone1 = BoneModel("Humerus", bone1_map_model, "", "", "app\\assets\\humerus.png", "app\\ai\\info\\humerus_info.csv")
+        bone2 = BoneModel("Femur", bone2_map_model, "", "", "app\\assets\\femur.png", "app\\ai\\info\\femur_info.csv")
         self.__bones.append(bone1)
         self.__bones.append(bone2)
 
@@ -47,7 +45,7 @@ class Repository:
         if features["SEX"] == "female":
             sex = 1
         keys = list(features.keys())
-        with open('data/'+bonePayload.get_bone_type().lower()+'.csv', 'a') as fd:
+        with open('app/data/'+bonePayload.get_bone_type().lower()+'.csv', 'a') as fd:
             line = ""
             for i in range(len(keys) - 2):
                 line += str(float(features[keys[i]])) + ","
@@ -57,7 +55,7 @@ class Repository:
     def bone_exists(self,bonePayload):
         features = bonePayload.get_bone_features()
         keys = list(features.keys())
-        with open('data/'+bonePayload.get_bone_type().lower()+'.csv', 'r') as read_obj:
+        with open('app/data/'+bonePayload.get_bone_type().lower()+'.csv', 'r') as read_obj:
             csv_reader = reader(read_obj)
             for row in csv_reader:
                 exista = True

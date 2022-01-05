@@ -1,7 +1,6 @@
 from PySide6 import QtCore
-from PySide6.QtWidgets import QMessageBox, QWidget, QLabel, QVBoxLayout, QHBoxLayout, QPushButton
+from PySide6.QtWidgets import QWidget, QLabel, QVBoxLayout, QHBoxLayout, QPushButton
 
-from domain.Response import Response
 
 class ResponseWindow(QWidget):
     def __init__(self,controller,bone_info,response):

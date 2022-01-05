@@ -107,7 +107,7 @@ class DecisionTree:
     def import_humerus(self):
         column_names = ['HML', 'HEB', 'HHD', 'HMLD', 'SEX', 'AGE']
         self.__feature_cols = ['HML', 'HEB', 'HHD', 'HMLD']
-        self.__filename = "data/humerus.csv"
+        self.__filename = "app/ai/data/humerus.csv"
 
         # modify_age(self.__filename)
         self.__data_set = pd.read_csv(self.__filename, header=None, names=column_names)
@@ -117,7 +117,7 @@ class DecisionTree:
     def import_femur(self):
         column_names = ['FML', 'FHD', 'FEB', 'FMLD', 'SEX', 'AGE']
         self.__feature_cols = ['FML', 'FHD', 'FEB', 'FMLD']
-        self.__filename = "data/femur.csv"
+        self.__filename = "app/ai/data/femur.csv"
 
         # modify_age(self.__filename)
         self.__data_set = pd.read_csv(self.__filename, header=None, names=column_names)
@@ -184,7 +184,7 @@ class DecisionTree:
         self.create_decision_tree("age classification")
 
         self.plot_data_age()
-        filename = "data/decision_trees/tree_age_" + self.__filename.split(".")[0].split("/")[1] + ".dot"
+        filename = "app/data/decision_trees/tree_age_" + self.__filename.split(".")[0].split("/")[1] + ".dot"
         export_graphviz(self.__tree,
                         out_file=filename,
                         feature_names=self.__feature_cols,
@@ -199,7 +199,7 @@ class DecisionTree:
         self.create_decision_tree("sex classification")
 
         self.plot_data_sex()
-        filename = "data/decision_trees/tree_sex_" + self.__filename.split(".")[0].split("/")[1] + ".dot"
+        filename = "app/data/decision_trees/tree_sex_" + self.__filename.split(".")[0].split("/")[1] + ".dot"
         export_graphviz(self.__tree,
                         out_file=filename,
                         feature_names=self.__feature_cols,

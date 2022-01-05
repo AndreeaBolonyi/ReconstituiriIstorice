@@ -1,5 +1,5 @@
-from domain.validators.InputValidator import InputValidator
-from domain.validators.ValidatorException import ValidatorException
+from app.src.domain.validators.InputValidator import InputValidator
+from app.src.domain.validators.ValidatorException import ValidatorException
 
 
 class FemurValidator(InputValidator):
