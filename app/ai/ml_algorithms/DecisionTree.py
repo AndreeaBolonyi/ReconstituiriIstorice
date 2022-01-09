@@ -265,6 +265,23 @@ class DecisionTree:
         plt.legend(["Acuratete sex humerus ANN", "Acuratete sex femur ANN", "Acuratete sex humerus arbore decizie", "Acuratete sex femur arbore decizie"])
         plt.show()
 
+        humerus_ann_age = [53.125, 22.321428571428573, 18.75, 14.732142857142858, 19.06614785992218]
+        femur_ann_age = [60.0, 24.761904761904763, 0.8333333333333334, 28.571428571428573, 23.651452282157678]
+
+        humerus_tree_age = [24.615384615384617, 31.007751937984494, 29.961089494163424, 34.51327433628318, 26.66666668]
+        femur_tree_age = [39.34426229508197, 33.057851239669425, 30.29045643153527, 35.84905660377358, 36.059765]
+
+        plt.scatter(test_sizes, humerus_ann_age)
+        plt.scatter(test_sizes, femur_ann_age)
+        plt.scatter(test_sizes, humerus_tree_age)
+        plt.scatter(test_sizes, femur_tree_age)
+        plt.title("Determinare varsta")
+        plt.xlabel("% date de test")
+        plt.ylabel("acuratete")
+        plt.legend(["Acuratete humerus ANN", "Acuratete femur ANN", "Acuratete humerus arbore decizie",
+                    "Acuratete femur arbore decizie"])
+        plt.show()
+
     def get_acc_sex_humerus(self, test_size):
         self.import_humerus()
         self.split_data_for_sex(test_size)
