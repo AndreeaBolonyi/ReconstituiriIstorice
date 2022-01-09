@@ -178,6 +178,7 @@ def clasification_sex(data, output):
     model.add(Dense(40, activation='relu'))
     model.add(Dense(2, activation='sigmoid'))
 
+<<<<<<< Updated upstream
     # lr_schedule = keras.optimizers.schedules.ExponentialDecay(
     #     initial_learning_rate=0.01,
     #     decay_steps=70,
@@ -187,6 +188,9 @@ def clasification_sex(data, output):
         initial_learning_rate=0.01,
         decay_steps=55,
         decay_rate=0.98)
+=======
+    history = model.fit(train_data, train_output, validation_data=(valid_data, valid_output), epochs=1000, batch_size=50)
+>>>>>>> Stashed changes
 
     opt = keras.optimizers.Adam(learning_rate=lr_schedule)
     model.compile(loss='binary_crossentropy', optimizer=opt,metrics=['accuracy'])
@@ -200,8 +204,14 @@ def clasification_sex(data, output):
     acc = history.history['accuracy']
     val_acc = history.history['val_accuracy']
     epochs = range(1, len(loss) + 1)
+<<<<<<< Updated upstream
     plt.title('Humerus')
     #plt.plot(epochs, loss, 'y', label='Loss')
+=======
+    plt.plot(epochs, loss, 'y', label='Loss')
+    plt.plot(epochs, acc, color='black', label='Accuracy')
+    plt.plot(epochs, val_loss, 'y', color='black', label='Loss Validation')
+>>>>>>> Stashed changes
     plt.plot(epochs, val_acc, color='red', label='Accuracy Validation')
     plt.plot(epochs, acc, color='black', label='Accuracy Test')
     #plt.plot(epochs, val_loss, 'y', color='black', label='Loss Validation')
@@ -437,9 +447,13 @@ def run_age2(bone_type):
 
 
 if __name__ == '__main__':
+<<<<<<< Updated upstream
     #run('femur')
     run_age2("humerus")
     # list = [0.2, 0.35, 0.4, 0.7, 0.8]
     # list_acc_humerus=[96.875, 83.03571428571429, 82.8125, 78.125, 71.59533073929961]
     # list_acc_femur=[86.66666666666667, 87.61904761904762, 90.0, 80.47619047619048, 80.91286307053942]
     # plot_test(list_acc_femur,list_acc_humerus,list)
+=======
+    run('humerus')
+>>>>>>> Stashed changes
