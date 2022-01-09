@@ -10,3 +10,5 @@ Proiectul propus este menit sa vina in ajutorul persoanelor pasionate de istorie
 * [Setul de date cu care se lucreaza](https://github.com/AndreeaBolonyi/ReconstituiriIstorice/tree/main/data)
 * [Descrierea masuratorilor folosite](https://github.com/AndreeaBolonyi/ReconstituiriIstorice/tree/main/info)
 * [Arborii de decizie generati in urma antrenarii](https://github.com/AndreeaBolonyi/ReconstituiriIstorice/tree/main/data/decision_trees)
+* [Panda3D documentatie oficiala](https://www.panda3d.org/)
+* [Panda3D cod aplicatie](https://github.com/AndreeaBolonyi/ReconstituiriIstorice/blob/main/app/src/rendering/RenderingView.py)

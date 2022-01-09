@@ -175,20 +175,8 @@ Dezvoltarea aplicartiei se bazeaza pe limbajul Python pentru partea de backend s
 Caracteristicile folosite pentru fiecare tip de os si semnificatiile lor.
 
 \begin{figure}[h!]
-\centerline{\includegraphics[height=10cm]{Imagini/tibia.PNG}}
-\caption{Caracteristici tibie.}
-\label{fig}
-\end{figure}
-
-\begin{figure}[h!]
 \centerline{\includegraphics[height=10cm]{Imagini/humerus.PNG}}
 \caption{Caracteristici humerus.}
-\label{fig}
-\end{figure}
-
-\begin{figure}[h!]
-\centerline{\includegraphics[height=10cm]{Imagini/radius.PNG}}
-\caption{Caracteristici radius.}
 \label{fig}
 \end{figure}
 
@@ -273,41 +261,79 @@ Reteaua neuronala este alcaturita din:
     \item stratul de iesire cu 2 neoroni
 \end{itemize}
 
+\noindent Pentru Humerus acuratetea modelului de clasificare de sex se afla intre 80-87\% in timp ce pentru femur acuratetea este intre 80-83\%. \newline
+
+\noindent Pentru rezolvarea problemei de clasificare a varstei am impartit datele ca fiind 80\% din ele date de antrenament si 20\% pentru date de testare. Reteaua neuronala este alcatuita din:
+\begin{itemize}
+    \item stratul de intrare ce contine 4 neoroni
+    \item strat intermediar de 20 de neoroni
+    \item strat intermediar de 10 de neuroni
+    \item stratul de iesire cu 5 neoroni
+\end{itemize}
+
+\noindent Pentru Humerus acuratetea modelului de clasificare de varsta se afla intre 18-27\% in timp ce pentru femur acuratetea este intre 19-27\%. \newline 
+ 
 \begin{figure}[h!]
 \centerline{\includegraphics{Imagini/retea.PNG}}
 \caption{Structura retelei neuronale pentru clasificarea in functie de sex.}
 \label{fig}
 \end{figure}
 
-\noindent Pentru Humerus acuratetea modelului de clasificare de sex se afla intre 80-87\% in timp ce pentru femur acuratetea este intre 80-83\%.
-
 \begin{figure}[h!]
 \centerline{\includegraphics[height=8cm,width=20cm]{Imagini/tabel_date_acuratete.PNG}}
-\caption{Rezultate obtinute pentru mai multe testari.}
+\caption{Rezultate obtinute pentru mai multe testari pentru sex.}
 \label{fig}
 \end{figure}
 
 \begin{figure}[h!]
 \centerline{\includegraphics[height=10cm]{Imagini/acuratete_humerus.png}}
-\caption{Acuratetea obtinuta pentru humerus in functie de numarul de epoci.}
+\caption{Acuratetea obtinuta pentru humerus in functie de numarul de epoci pentru sex.}
 \label{fig}
 \end{figure}
 
 \begin{figure}[h!]
 \centerline{\includegraphics[height=10cm]{Imagini/loss_humerus.png}}
-\caption{Loss obtinut pentru humerus in functie de numarul de epoci.}
+\caption{Loss obtinut pentru humerus in functie de numarul de epoci pentru sex.}
 \label{fig}
 \end{figure}
 
 \begin{figure}[h!]
 \centerline{\includegraphics[height=10cm]{Imagini/acuratete_femur.png}}
-\caption{Acuratetea obtinuta pentru femur in functie de numarul de epoci.}
+\caption{Acuratetea obtinuta pentru femur in functie de numarul de epoci pentru sex.}
 \label{fig}
 \end{figure}
 
 \begin{figure}[h!]
 \centerline{\includegraphics[height=10cm]{Imagini/loss_femur.png}}
-\caption{Loss obtinut pentru femur in functie de numarul de epoci.}
+\caption{Loss obtinut pentru femur in functie de numarul de epoci pentru sex.}
+\label{fig}
+\end{figure}
+
+\begin{figure}[h!]
+\centerline{
+\includegraphics[height=10cm]{Imagini/humerus_loss_age.png}}
+\caption{Loss obtinut pentru humerus in functie de numarul de epoci pentru varsta.}
+\label{fig}
+\end{figure}
+
+\begin{figure}[h!]
+\centerline{
+\includegraphics[height=10cm]{Imagini/femur_loss_age.png}}
+\caption{Loss obtinut pentru femur in functie de numarul de epoci pentru varsta.}
+\label{fig}
+\end{figure}
+
+\begin{figure}[h!]
+\centerline{
+\includegraphics[height=10cm]{Imagini/femur_acc_age.png}}
+\caption{Acuratete obtinuta pentru femur in functie de numarul de epoci pentru varsta.}
+\label{fig}
+\end{figure}
+
+\begin{figure}[h!]
+\centerline{
+\includegraphics[height=10cm]{Imagini/humerus_acc_age.png}}
+\caption{Acuratete obtinuta pentru humerus in functie de numarul de epoci pentru varsta.}
 \label{fig}
 \end{figure}
 
@@ -390,7 +416,7 @@ Cu aceste modificari acuratetea pentru detectare de sex a crescut de la 79.65\%(
 Functia de loss este functia care calculeaza distanta dintre iesirea curenta a algoritmului si iesirea asteptata. Este o metoda de a evalua modul in care algoritmul modeleaza datele. (vezi figura \ref{loss_femur} si \ref{loss_humerus})
 \newline
 
-\noindent O matrice de confuzie este un rezumat al rezultatelor predictiei pentru o problema de clasificare. Numarul de predictii corecte si incorecte este rezumat cu valori de numarare si impartit pe fiecare clasa. Aceasta este cheia matricei de confuzie. Matricea de confuzie arata modalitatile in care modelul de clasificare este confuz cand face predictii. (vezi figura \ref{matrice_confuzie_sex} si \ref{matrice_confuzie_varsta})
+\noindent O matrice de confuzie este un rezumat al rezultatelor predictiei pentru o problema de clasificare. Numarul de predictii corecte si incorecte este rezumat cu valori de numarare si impartit pe fiecare clasa. Aceasta este cheia matricei de confuzie. Matricea de confuzie arata modalitatile in care modelul de clasificare este confuz cand face predictii. (vezi \ref{matrice_confuzie_sex}, \ref{matrice_confuzie_varsta}, \ref{matrice_confuzie_femur_sex_retea}, \ref{matrice_confuzie_sex_humeru_retea})
 
 \hfill \break
 \hfill \break
@@ -439,15 +465,29 @@ Functia de loss este functia care calculeaza distanta dintre iesirea curenta a a
 \begin{figure}
     \centering
     \includegraphics[height=10cm]{Imagini/matrice_confuzie_sex_arbore.PNG}
-    \caption{Matricea de confuzie sex humerus.}
+    \caption{Matricea de confuzie sex humerus(arbore de decizie).}
     \label{matrice_confuzie_sex}
 \end{figure}
 
 \begin{figure}
     \centering
     \includegraphics[height=10cm]{Imagini/matrice_confuzie_varsta_arbore_decizie.png}
-    \caption{Matricea de confuzie varsta humerus.}
+    \caption{Matricea de confuzie varsta humerus(arbore de decizie).}
     \label{matrice_confuzie_varsta}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \includegraphics[height=10cm]{Imagini/matrice_confuzie_sex_retea.png}
+    \caption{Matricea de confuzie sex humerus(retea neuronala).}
+    \label{matrice_confuzie_sex_humerus_retea}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \includegraphics[height=10cm]{Imagini/matrice_confuzie_sex_femur_retea.png}
+    \caption{Matricea de confuzie sex femur(retea neuronala).}
+    \label{matrice_confuzie_femur_sex_retea}
 \end{figure}
 
 \chapter{Analiza statistica a algoritmilor}
@@ -480,18 +520,82 @@ Determinare sex pentru humerus
     \item interval de incredere: [23.33, 41.66]
 \end{itemize}
 
-\begin{figure}
+\begin{figure}[!h]
     \centering
     \includegraphics[width=18cm]{Imagini/plot_acc_arbori.PNG}
     \caption{Reprezentare grafica a relatiei dintre acuratete si dimensiunea setului de date.\newline (albastru - humerus, portocaliu - femur)}
     \label{plot_arbori}
 \end{figure}
 
-\section{Retele neuronale}
-\label{analizaReteleVarsta}
+\section{Retele neuronale (vezi \ref{plot_retele})}
+\label{analizaReteleSex}
 
-\section{Rezultatele analizei}
+\noindent Determinare sex pentru humerus
+\begin{itemize}
+    \item media acuratetilor este: 82.48
+    \item interval de incredere: [71.59, 96.875]
+\end{itemize}
+
+\noindent Determinare varsta pentru humerus
+\begin{itemize}
+    \item media acuratetilor este: 25.59
+    \item interval de incredere: [14.73, 53.125]
+\end{itemize}
+
+\noindent Determinare sex pentru femur
+\begin{itemize}
+    \item media acuratetilor este: 85.13
+    \item interval de incredere: [80.47, 90.0]
+\end{itemize}
+
+\noindent Determinare varsta pentru femur
+\begin{itemize}
+    \item media acuratetilor este: 27.56
+    \item interval de incredere: [0.83, 60.00]
+\end{itemize}
+
+\begin{figure}[!h]
+    \centering
+    \includegraphics[width=18cm,height=8cm]{Imagini/plot_acurateti_retea_sex.png}
+    \caption{Reprezentare grafica a relatiei dintre acuratete si dimensiunea setului de date pentru reteaua neuronala.(albastru - humerus, portocaliu - femur)}
+    \label{plot_retele}
+\end{figure}
+
+\section{Rezultatele analizei pentru determinarea sexului (vezi \ref{plot_sex})}
 \label{analizaRezultate}
+
+\noindent Folosind arbori de decizie am obtinut un interval de incredere de [78.12, 84.37] pentru humerus, in timp ce folosind reteaua neuronala am obtinut [71.59, 96.875]. Cele doua intervale obtinute nu sunt disjuncte, deci nu se poate exprima care algoritm este mai eficient pentru setul de date de la humerus. 
+\newline
+
+\noindent Folosind arbori de decizie am obtinut un interval de incredere de [84.76, 88.75] pentru femur, in timp ce folosind reteaua neuronala am obtinut [80.47, 90.0]. Analog ca pentru humerus, cele doua intervale nu sunt disjuncte, deci nu se poate afirma care algoritm este mai eficient pe acest set de date.
+\newline
+
+\noindent Concluzionand, pentru determinarea sexului, atat pentru humerus, cat si pentru femur, cei doi algoritmi de machine learning propusi dau rezultate similare, neputand afirma ca unul este mai bun ca celalalt.
+
+\section{Rezultatele analizei pentru determinarea varstei (vezi \ref{plot_age})}
+\label{analizaRezultate}
+
+\noindent Folosind arbori de decizie am obtinut un interval de incredere de [20.31, 33.59] pentru humerus, in timp ce folosind reteaua neuronala am obtinut [14.73, 53.125]. Cele doua intervale obtinute nu sunt disjuncte, deci nu se poate exprima care algoritm este mai eficient pentru setul de date de la humerus. 
+\newline \newline \newline
+
+\noindent Folosind arbori de decizie am obtinut un interval de incredere de [23.33, 41.66] pentru femur, in timp ce folosind reteaua neuronala am obtinut [0.83, 60.00]. Analog ca pentru humerus, cele doua intervale nu sunt disjuncte, deci nu se poate afirma care algoritm este mai eficient pe acest set de date.
+\newline
+
+\noindent Concluzionand, pentru determinarea varstei, atat pentru humerus, cat si pentru femur, cei doi algoritmi de machine learning propusi dau rezultate similare, neputand afirma ca unul este mai bun ca celalalt. \newline
+
+\begin{figure}[!h]
+    \centering
+    \includegraphics[width=18cm, height=10cm]{Imagini/plot_age.PNG}
+    \caption{Reprezentare grafica a celor doi algoritmi pentru determinarea sexului.}
+    \label{plot_sex}
+\end{figure}
+
+\begin{figure}[!h]
+    \centering
+    \includegraphics[width=18cm, height=10cm]{Imagini/plot_sex.PNG}
+    \caption{Reprezentare grafica a celor doi algoritmi pentru determinarea varstei.}
+    \label{plot_age}
+\end{figure}
 
 \chapter{Wiki}
 \label{chapter:wiki}
@@ -536,6 +640,11 @@ Sklearn
     \item \href{https://en.wikipedia.org/wiki/ID3_algorithm}{Algoritm arbore de decizie articol stiintific mentionat drept referinta}
     \item \href{https://machinelearningmastery.com/classification-and-regression-trees-for-machine-learning/}{Implementare arbori de decizie din sklearn}
     \item \href{https://www.datacamp.com/community/tutorials/decision-tree-classification-python}{Implementare arbori de decizie din sklearn a doua varianta}
+\end{itemize}
+
+\noindent Panda3D
+\begin{itemize}
+    \item \href{https://www.panda3d.org/}{Documentatia oficiala}
 \end{itemize}
 
 \chapter{Lucrari stiintifice}
