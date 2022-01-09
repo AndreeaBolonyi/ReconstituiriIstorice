@@ -25,6 +25,6 @@ if __name__ == '__main__':
     view.show()
 
     decision_tree = DecisionTree.DecisionTree(bone1)
-    decision_tree.statistical_analysis()
+    decision_tree.plot_statistical_anaylisis_ann_tree()
 
     sys.exit(app.exec())

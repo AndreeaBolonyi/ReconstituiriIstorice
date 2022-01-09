@@ -1,6 +1,5 @@
 import csv
 
-import numpy as np
 import pandas as pd
 from tempfile import NamedTemporaryFile
 import shutil
@@ -247,6 +246,24 @@ class DecisionTree:
         plt.ylabel("acuratete")
         plt.show()
 
+    def plot_statistical_anaylisis_ann_tree(self):
+        test_sizes = [0.2, 0.4, 0.8, 0.35, 0.7]
+
+        humerus_ann_sex = [96.875, 83.03571428571429, 82.8125, 78.125, 71.59533073929961]
+        femur_ann_sex = [86.66666666666667, 87.61904761904762, 90.0, 80.47619047619048, 80.91286307053942]
+
+        humerus_tree_sex = [86.15384615384616, 81.3953488372093, 84.43579766536965, 80.53097345132744, 84.0]
+        femur_tree_sex = [91.80327868852459, 85.9504132231405, 86.30705394190872, 86.79245283018868, 85.30805687203792]
+
+        plt.scatter(test_sizes, humerus_ann_sex)
+        plt.scatter(test_sizes, femur_ann_sex)
+        plt.scatter(test_sizes, humerus_tree_sex)
+        plt.scatter(test_sizes, femur_tree_sex)
+        plt.title("Determinare sex")
+        plt.xlabel("% date de test")
+        plt.ylabel("acuratete")
+        plt.legend(["Acuratete sex humerus ANN", "Acuratete sex femur ANN", "Acuratete sex humerus arbore decizie", "Acuratete sex femur arbore decizie"])
+        plt.show()
 
     def get_acc_sex_humerus(self, test_size):
         self.import_humerus()
